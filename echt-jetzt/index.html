@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Echt jetzt? Geschichts-Check</title>
+<meta name="color-scheme" content="light">
+<style>
+:root{
+  --paper:#f6efe2; --paper2:#efe4cf; --ink:#2b2118; --muted:#6f5f4c;
+  --accent:#9b2c1f; --accent2:#c9a24a; --ok:#2f7a45; --bad:#a3352a;
+  --card:#fffaf0; --line:#d8c7a6;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:Georgia,"Times New Roman",serif;font-size:17px;line-height:1.45;
+  background-image:radial-gradient(circle at 20% 10%,rgba(255,255,255,.6),transparent 40%),radial-gradient(circle at 80% 90%,rgba(201,162,74,.12),transparent 50%);min-height:100vh}
+.wrap{max-width:560px;margin:0 auto;padding:16px 16px 40px}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:13px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.bar{height:6px;background:var(--paper2);border-radius:3px;overflow:hidden;flex:1;margin-left:10px}
+.bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .4s}
+h1{font-size:30px;line-height:1.15;margin:8px 0 6px}
+h2{font-size:21px;line-height:1.25;margin:16px 0 10px}
+p{margin:0 0 12px}
+.stamp{display:inline-block;border:2px solid var(--accent);color:var(--accent);font-family:system-ui,sans-serif;font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:4px;transform:rotate(-3deg)}
+.doc{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px 16px 14px;box-shadow:0 2px 0 var(--line),0 8px 20px rgba(60,40,10,.08);position:relative;margin:10px 0 14px}
+.doc:before{content:"";position:absolute;top:-9px;left:50%;width:70px;height:18px;margin-left:-35px;background:rgba(201,162,74,.45);transform:rotate(-2deg)}
+.doc .kind{font-family:system-ui,sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.doc blockquote{margin:0;font-size:19px;font-style:italic}
+.doc .who{margin-top:10px;font-family:system-ui,sans-serif;font-size:13px;color:var(--muted)}
+.poster{background:#1c1c1c;color:#f3e7c9;text-align:center;padding:22px 12px;border-radius:4px;font-family:Impact,"Arial Black",system-ui,sans-serif;letter-spacing:.04em}
+.poster b{display:block;font-size:26px;line-height:1.15;color:#e9c46a}
+.poster small{display:block;margin-top:8px;font-family:system-ui,sans-serif;font-size:12px;color:#bbb;letter-spacing:0}
+.photo{aspect-ratio:4/3;border:10px solid #fff;border-bottom-width:34px;background:linear-gradient(160deg,#8d8070,#4a4036);box-shadow:0 4px 12px rgba(0,0,0,.25);position:relative;transform:rotate(-1.5deg);display:flex;align-items:center;justify-content:center;color:#efe6d6;font-family:system-ui,sans-serif;font-size:14px;text-align:center;padding:12px}
+.photo span{position:absolute;bottom:-28px;left:0;right:0;color:#333;font-family:"Comic Sans MS","Segoe Print",cursive;font-size:14px}
+.q{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-weight:700;font-size:18px;margin:6px 0 12px}
+.answers{display:grid;gap:10px}
+button{font:inherit;cursor:pointer}
+.ans{width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:10px;padding:13px 14px;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;color:var(--ink);transition:transform .1s,border-color .2s,background .2s}
+.ans:active{transform:scale(.98)}
+.ans.right{border-color:var(--ok);background:#e6f3e9}
+.ans.wrong{border-color:var(--bad);background:#f8e3df}
+.ans[disabled]{cursor:default}
+.ans.dim{opacity:.55}
+.fb{margin-top:14px;border-left:5px solid var(--ok);background:#fff;border-radius:6px;padding:12px 14px;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:15.5px;animation:pop .3s ease}
+.fb.no{border-left-color:var(--bad)}
+.fb strong.t{display:block;font-size:17px;margin-bottom:4px}
+.skill{margin-top:10px;font-size:13.5px;background:var(--paper2);border-radius:6px;padding:8px 10px;color:#4a3b2a}
+.skill b{color:var(--accent)}
+.btn{display:block;width:100%;margin-top:16px;background:var(--accent);color:#fff;border:0;border-radius:10px;padding:15px;font-family:system-ui,sans-serif;font-weight:700;font-size:17px;box-shadow:0 3px 0 #6d1d14}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 #6d1d14}
+.btn.ghost{background:transparent;color:var(--accent);border:2px solid var(--accent);box-shadow:none}
+.hide{display:none}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.score{font-size:54px;font-weight:700;color:var(--accent);line-height:1;margin:6px 0}
+.badge{font-family:system-ui,sans-serif;font-weight:700;font-size:20px;margin-bottom:12px}
+.grid{display:grid;gap:10px;margin:12px 0}
+.tile{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-family:system-ui,sans-serif;font-size:15px}
+.tile h3{margin:0 0 4px;font-size:16px;color:var(--accent)}
+.tile ul{margin:6px 0 0;padding-left:18px}
+.small{font-family:system-ui,sans-serif;font-size:13px;color:var(--muted)}
+.intro li{margin-bottom:6px}
+.tag{display:inline-block;font-family:system-ui,sans-serif;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--accent);border-radius:20px;padding:4px 10px;margin:4px 0 6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Start -->
+  <section id="start">
+    <span class="stamp">Geschichte · Oberstufe</span>
+    <h1>Echt jetzt?</h1>
+    <p style="font-family:system-ui,sans-serif;font-weight:700;color:var(--accent);margin-top:-4px">Der Geschichts-Check</p>
+    <p>Historiker glauben nichts einfach so. Sie fragen: <b>Wer sagt das? Wann? Und warum?</b></p>
+    <div class="doc intro">
+      <div class="kind">Dein Auftrag</div>
+      <ul style="margin:0;padding-left:20px">
+        <li>8 Quellen vom Mittelalter bis 1989, je eine Frage</li>
+        <li>Dauert ungefähr 5 Minuten</li>
+        <li>Prüfe wie in der Oberstufe: Wer spricht? Wann? Mit welcher Absicht? Und was fehlt?</li>
+      </ul>
+    </div>
+    <button class="btn" id="go">Los geht's</button>
+    <p class="small" style="margin-top:14px">Es werden keine Daten gespeichert oder verschickt.</p>
+  </section>
+
+  <!-- Quiz -->
+  <section id="quiz" class="hide">
+    <header class="top"><span id="count">Quelle 1 / 8</span><div class="bar"><i id="prog"></i></div></header>
+    <div id="card"></div>
+  </section>
+
+  <!-- Ende -->
+  <section id="end" class="hide">
+    <span class="stamp">Auswertung</span>
+    <div class="score" id="score"></div>
+    <div class="badge" id="badge"></div>
+    <p id="badgeText"></p>
+
+    <h2>Geschichte in der Oberstufe</h2>
+    <div class="grid">
+      <div class="tile">
+        <h3>Einführungsphase (EF)</h3>
+        Wie kämpfen Menschen um Mitsprache und Freiheit?
+        <ul>
+          <li>Demokratie im antiken Athen</li>
+          <li>Die Stadt im Spätmittelalter</li>
+          <li>Unabhängigkeit der USA und Kampf gegen die Sklaverei</li>
+          <li>Französische Revolution und Revolution 1848/49</li>
+          <li>China und Russland im 20. Jahrhundert</li>
+        </ul>
+      </div>
+      <div class="tile">
+        <h3>Qualifikationsphase (Q1 und Q2)</h3>
+        Wie ist unsere Gegenwart entstanden?
+        <ul>
+          <li>Das Deutsche Kaiserreich und die Moderne</li>
+          <li>Erster Weltkrieg und Weimarer Republik</li>
+          <li>Nationalsozialismus und Zweiter Weltkrieg</li>
+          <li>Kalter Krieg und geteiltes Deutschland</li>
+          <li>Friedliche Revolution 1989 und die Welt danach</li>
+        </ul>
+      </div>
+      <div class="tile">
+        <h3>Wähle deinen Weg</h3>
+        <ul>
+          <li><b>Grundkurs:</b> 3 Stunden pro Woche, auch als Abiturfach möglich</li>
+          <li><b>Leistungskurs:</b> 5 Stunden pro Woche, mehr Tiefe und eigene Recherche</li>
+          <li><b>Zusatzkurs:</b> in der Q2, wenn du Geschichte nicht als Grund- oder Leistungskurs weiterführst</li>
+        </ul>
+      </div>
+      <div class="tile">
+        <h3>Was du mitnimmst</h3>
+        Fake News und Propaganda durchschauen, Quellen kritisch lesen und vergleichen, begründet urteilen und überzeugend argumentieren. Das brauchst du in Jura, Journalismus, Politik, Lehramt und überall, wo man mit Informationen arbeitet.
+      </div>
+    </div>
+    <p style="font-family:system-ui,sans-serif"><b>Fragen?</b> Sprich uns hier im Raum an und schau dir die echten Objekte auf dem Tisch an!</p>
+    <button class="btn ghost" id="again">Nochmal spielen</button>
+  </section>
+
+</div>
+
+<script>
+const Q = [
+  {
+    tag: "Quelle oder spätere Deutung?",
+    src: `<div class="kind">Behauptung in einem Erklärvideo</div>
+      <blockquote>„Im Mittelalter galt das Gesetz ‚Stadtluft macht frei‘: Wer als unfreier Bauer in die Stadt floh, war sofort frei."</blockquote>
+      <div class="who">Ein mittelalterlicher Gesetzestext mit genau diesem Satz ist nicht bekannt.</div>`,
+    q: "Was ist der Satz „Stadtluft macht frei“ also am ehesten?",
+    a: [
+      "Eine spätere, griffige Zusammenfassung von Historikern, die ein mittelalterliches Prinzip vereinfacht",
+      "Ein mittelalterliches Gesetz, das im ganzen Reich galt, nur ist das Original verloren",
+      "Eine Erfindung aus dem Internet ohne jeden historischen Hintergrund"
+    ],
+    r: 0,
+    fb: "Die Formel stammt von Rechtshistorikern des 19. Jahrhunderts. Dahinter steht ein echtes Prinzip vieler Stadtrechte, aber mit Bedingungen: Meist wurde man erst frei, wenn der Herr einen nicht innerhalb von „Jahr und Tag“ zurückforderte. Eine Darstellung kann also klingen wie eine Quelle.",
+    skill: "Die <b>Stadt im Spätmittelalter</b> ist Thema in der <b>EF</b>."
+  },
+  {
+    tag: "Anspruch und Wirklichkeit",
+    src: `<div class="kind">Unabhängigkeitserklärung der USA, 4. Juli 1776</div>
+      <blockquote>„Wir halten diese Wahrheiten für selbstverständlich: dass alle Menschen gleich geschaffen sind …"</blockquote>
+      <div class="who">Hauptautor: Thomas Jefferson. Er besaß zeitlebens Hunderte Sklaven.</div>`,
+    q: "Was zeigt dieser Widerspruch?",
+    a: [
+      "Der Satz war gelogen und ist deshalb für Historiker wertlos.",
+      "Das Ideal ging weiter als die Wirklichkeit. Gegner der Sklaverei konnten sich später genau auf diesen Satz berufen.",
+      "Mit „alle Menschen“ waren auch die Sklaven gemeint, die 1776 deshalb frei wurden."
+    ],
+    r: 1,
+    fb: "Die Sklaverei bestand in den USA noch bis 1865. Abolitionisten wie Frederick Douglass hielten der Nation ihre eigene Erklärung vor. Ein Ideal kann also auch dann etwas bewirken, wenn seine Verfasser es selbst nicht einlösen.",
+    skill: "Die Entstehung der USA und der <b>Kampf gegen die Sklaverei</b> sind Thema in der <b>EF</b>."
+  },
+  {
+    tag: "Augenzeuge = wahr?",
+    src: `<div class="kind">Gemälde</div>
+      <figure style="margin:0 0 10px"><img src="werner-1885.jpg" alt="Anton von Werner: Die Proklamierung des Deutschen Kaiserreiches, Fassung 1885" style="width:100%;border-radius:4px;display:block" onerror="this.parentNode.remove()"><figcaption class="who" style="margin-top:4px">Bild: gemeinfrei, via Wikimedia Commons</figcaption></figure>
+      <p style="margin:0 0 6px"><b>Anton von Werner: „Die Proklamierung des Deutschen Kaiserreiches (18. Januar 1871)“</b>, Fassung von 1885</p>
+      <div class="who">Werner war 1871 als Augenzeuge in Versailles dabei. Die Fassung von 1885 war ein Geschenk zu Bismarcks 70. Geburtstag. Sie zeigt Bismarck in der Bildmitte in strahlend weißer Uniform. Am 18. Januar 1871 trug er eine dunkle.</div>`,
+    q: "Was verrät dieses Bild vor allem?",
+    a: [
+      "Wie es am 18. Januar 1871 genau aussah, denn der Maler war ja dabei.",
+      "Wie man sich die Reichsgründung 1885 vorstellen sollte: mit Bismarck als Helden in der Mitte.",
+      "Gar nichts, denn ein Gemälde ist keine historische Quelle."
+    ],
+    r: 1,
+    fb: "Augenzeugenschaft macht ein Bild nicht automatisch genau. Die Fassung von 1885 ist ein Auftragswerk: Sie rückt Bismarck ins Zentrum und zeigt fast nur Fürsten und Offiziere, kein Parlament und kein Volk. Sie verrät mehr über das Jahr 1885 als über den Tag selbst.",
+    skill: "Das <b>Kaiserreich</b> ist Thema in der <b>Q-Phase</b>."
+  },
+  {
+    tag: "Wer spricht und warum?",
+    src: `<div class="kind">Aussage vor einem Untersuchungsausschuss des Parlaments, November 1919</div>
+      <blockquote>„Ein englischer General sagte mit Recht: ‚Die deutsche Armee ist von hinten erdolcht worden.‘"</blockquote>
+      <div class="who">Paul von Hindenburg, im Ersten Weltkrieg Chef der Obersten Heeresleitung. Gut zu wissen: Die Heeresleitung hatte im September 1918 selbst erklärt, dass der Krieg verloren sei, und einen Waffenstillstand verlangt.</div>`,
+    q: "Was wollte Hindenburg mit dieser Aussage erreichen?",
+    a: [
+      "Er wollte die Schuld an der Niederlage von der Armeeführung auf die Politiker in der Heimat schieben.",
+      "Er wollte als Fachmann neutral erklären, warum Deutschland den Krieg verloren hatte.",
+      "Er wollte zeigen, dass die Briten Deutschland unfair behandelt hatten."
+    ],
+    r: 0,
+    fb: "Hindenburg trug die militärische Niederlage mit und gab sie hier als Verrat aus. Daraus wurde die „Dolchstoßlegende“: Demokraten und Revolutionäre galten als Schuldige. Das hat die Weimarer Republik schwer belastet. Die Frage „Wer spricht, mit welchem Interesse?“ gehört zu jeder Quelle.",
+    skill: "Die <b>Weimarer Republik</b> ist Thema in der <b>Q-Phase</b>."
+  },
+  {
+    tag: "Quelle oder Darstellung?",
+    src: `<div class="kind">Roman</div>
+      <p style="margin:0 0 6px"><b>Erich Maria Remarque: „Im Westen nichts Neues“</b>, erschienen 1928/29</p>
+      <div class="who">Remarque war ab 1917 selbst Soldat an der Westfront. Der Roman wurde ein Weltbestseller und war heftig umstritten; die Nationalsozialisten verbrannten ihn 1933.</div>`,
+    q: "Ist der Roman eine Quelle?",
+    a: [
+      "Ja, er zeigt den Krieg genau so, wie er war, weil Remarque selbst dabei war.",
+      "Nein, ein Roman ist Fiktion und für Historiker deshalb unbrauchbar.",
+      "Für den Krieg selbst ist er eher eine Darstellung, aber er ist eine Quelle dafür, wie man um 1930 über den Krieg dachte und stritt."
+    ],
+    r: 2,
+    fb: "Ob etwas Quelle oder Darstellung ist, hängt von deiner Frage ab. Für den Frontalltag 1917 ist der Roman eine nachträgliche, literarisch gestaltete Darstellung. Für die Frage, wie Deutsche Ende der 1920er-Jahre über den Krieg stritten, ist er eine sehr gute Quelle.",
+    skill: "Der <b>Erste Weltkrieg</b> und seine Folgen sind Thema in der <b>Q-Phase</b>."
+  },
+  {
+    tag: "Was zeigt die Kamera?",
+    src: `<div class="kind">Wochenschau, September 1939</div>
+      <p style="margin:0">Der Film zeigt jubelnde Menschen, die Soldaten Blumen zuwerfen. Wochenschauen liefen vor jedem Kinofilm und wurden vom Propagandaministerium kontrolliert.</p>`,
+    q: "Kannst du daraus schließen, wie die Deutschen 1939 über den Kriegsbeginn dachten?",
+    a: [
+      "Ja, es sind echte Filmaufnahmen, also war die Stimmung begeistert.",
+      "Nein, die Bilder wurden ausgewählt, um Begeisterung zu zeigen. Für die echte Stimmung braucht man andere Quellen.",
+      "Nein, denn 1939 gab es noch keine Filmkameras."
+    ],
+    r: 1,
+    fb: "Auch echte Aufnahmen können ein falsches Bild ergeben: Was gezeigt wurde, bestimmte das Regime. Geheime Stimmungsberichte für die NS-Führung zeigen etwas anderes. 1939 herrschte eher gedrückte Stimmung, keine Kriegsbegeisterung wie 1914.",
+    skill: "<b>Nationalsozialismus und Zweiter Weltkrieg</b> sind Thema in der <b>Q-Phase</b>. Du lernst, wie Propaganda funktioniert."
+  },
+  {
+    tag: "Aussage und Handeln",
+    src: `<div class="kind">Pressekonferenz, Ost-Berlin, 15. Juni 1961</div>
+      <blockquote>„Niemand hat die Absicht, eine Mauer zu errichten!"</blockquote>
+      <div class="who">Walter Ulbricht, Staats- und Parteichef der DDR. Die Journalistin hatte nach einer „Staatsgrenze“ gefragt, das Wort „Mauer“ benutzte Ulbricht von sich aus. Zwei Monate später, am 13. August 1961, begann der Mauerbau.</div>`,
+    q: "Was kannst du mit dieser Quelle anfangen?",
+    a: [
+      "Nichts, denn sie ist eine Lüge und damit wertlos.",
+      "Sie beweist, dass der Mauerbau ein ganz spontaner Entschluss war.",
+      "Sie zeigt, was die DDR-Führung die Öffentlichkeit glauben lassen wollte. Was sie wirklich plante, muss man mit anderen Quellen prüfen."
+    ],
+    r: 2,
+    fb: "Auch eine falsche Aussage ist eine wertvolle Quelle, nämlich dafür, wie sich die DDR-Führung darstellen wollte. Wie weit die Planung im Juni schon war, ist unter Historikern umstritten. Auffällig bleibt, dass das Wort „Mauer“ von Ulbricht selbst kam.",
+    skill: "Das <b>geteilte Deutschland</b> ist Thema in der <b>Q-Phase</b>."
+  },
+  {
+    tag: "Anlass oder Ursache?",
+    src: `<div class="kind">Live-Pressekonferenz, Ost-Berlin, 9. November 1989</div>
+      <blockquote>„Das tritt nach meiner Kenntnis … ist das sofort, unverzüglich."</blockquote>
+      <div class="who">Günter Schabowski (SED) auf die Frage, ab wann die neue Reiseregelung gilt. Eigentlich sollte sie erst am nächsten Tag gelten. Noch in der Nacht öffneten sich die Grenzübergänge.</div>`,
+    q: "Ist die Mauer also wegen eines Versprechers gefallen?",
+    a: [
+      "Ja, ohne den Versprecher gäbe es die DDR vielleicht noch heute.",
+      "Der Versprecher bestimmte den Zeitpunkt. Die Ursachen waren Massenflucht, Demonstrationen und die Krise der DDR.",
+      "Nein, die Öffnung war mit der Bundesregierung abgesprochen."
+    ],
+    r: 1,
+    fb: "Historiker unterscheiden zwischen <b>Anlass</b> und <b>Ursache</b>. Schabowskis Zettel war der Anlass für diese eine Nacht. Ohne die Friedliche Revolution, die Massenflucht über Ungarn und die wirtschaftliche Krise der DDR hätte er nichts ausgelöst.",
+    skill: "Die <b>Friedliche Revolution 1989</b> ist Thema in der <b>Q-Phase</b>."
+  }
+];
+
+let i = 0, points = 0;
+const $ = id => document.getElementById(id);
+
+function reset(){ i = 0; points = 0; Q.forEach(d => delete d.order); }
+function show(id){ ["start","quiz","end"].forEach(s => $(s).classList.toggle("hide", s !== id)); window.scrollTo(0,0); }
+
+function render(){
+  const d = Q[i];
+  // Antworten mischen, damit die richtige nicht immer an derselben Stelle steht
+  if (!d.order){ d.order = d.a.map((_,k)=>k).sort(()=>Math.random()-.5); }
+  $("count").textContent = `Quelle ${i+1} / ${Q.length}`;
+  $("prog").style.width = (i / Q.length * 100) + "%";
+  $("card").innerHTML = `
+    <div class="tag">Prüfe: ${d.tag}</div>
+    <div class="doc">${d.src}</div>
+    <div class="q">${d.q}</div>
+    <div class="answers">${d.order.map(k=>`<button class="ans" data-k="${k}">${d.a[k]}</button>`).join("")}</div>
+    <div id="fbBox"></div>`;
+  document.querySelectorAll(".ans").forEach(b => b.addEventListener("click", () => answer(+b.dataset.k)));
+  window.scrollTo(0,0);
+}
+
+function answer(k){
+  const d = Q[i], ok = k === d.r;
+  if (ok) points++;
+  document.querySelectorAll(".ans").forEach(b => {
+    const idx = +b.dataset.k;
+    b.disabled = true;
+    if (idx === d.r) b.classList.add("right");
+    else if (idx === k) b.classList.add("wrong");
+    else b.classList.add("dim");
+  });
+  $("fbBox").innerHTML = `
+    <div class="fb ${ok ? "" : "no"}">
+      <strong class="t">${ok ? "Richtig!" : "Nicht ganz."}</strong>
+      ${d.fb}
+      <div class="skill">${d.skill}</div>
+    </div>
+    <button class="btn" id="next">${i < Q.length-1 ? "Nächste Quelle" : "Zur Auswertung"}</button>`;
+  $("prog").style.width = ((i+1) / Q.length * 100) + "%";
+  $("next").addEventListener("click", () => { i++; i < Q.length ? render() : finish(); });
+  $("fbBox").scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+function finish(){
+  $("score").textContent = `${points} / ${Q.length}`;
+  let b, t;
+  if (points >= 7){ b = "🏅 Quellen-Profi"; t = "Du lässt dir nichts vormachen. Damit bringst du die besten Voraussetzungen für Geschichte in der Oberstufe mit, vielleicht sogar für den Leistungskurs?"; }
+  else if (points >= 5){ b = "🔍 Spürnase"; t = "Ein guter Riecher! In der Oberstufe lernst du die Werkzeuge, um jede Quelle sicher zu knacken."; }
+  else { b = "🧭 Entdecker/in"; t = "Genau dafür gibt es Geschichte in der Oberstufe: Hier lernst du, Quellen und Fake News zu durchschauen."; }
+  $("badge").textContent = b; $("badgeText").textContent = t;
+  show("end");
+}
+
+$("go").addEventListener("click", () => { reset(); show("quiz"); render(); });
+$("again").addEventListener("click", () => { reset(); show("quiz"); render(); });
+</script>
+</body>
+</html>
