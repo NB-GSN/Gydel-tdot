@@ -9,5 +9,5 @@ Bild: Anton von Werner, „Die Proklamierung des Deutschen Kaiserreiches“, Fas
 
 ## Philosophie Oberstufe: „Denk mal weiter! Der Philosophie-Check“
 
-Handy-Quiz mit 6 Gedankenexperimenten zu den Themen des neuen KLP Philosophie Sek. II: eigene Meinung abstimmen (anonymes Live-Meinungsbild über die Google-Tabelle der Denk-mal-App, Schlüssel pp-tally-ob-1 bis -6), danach ein Argument-Check mit Erklärung.
+Handy-Quiz mit 6 Gedankenexperimenten zu den Themen des neuen KLP Philosophie Sek. II: eigene Meinung wählen (nichts wird gespeichert oder verschickt), danach ein Argument-Check mit Erklärung.
 Adresse: https://nb-gsn.github.io/Gydel-tdot/denk-weiter/
