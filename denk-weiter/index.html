@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Denk mal weiter! Philosophie-Check</title>
+<meta name="color-scheme" content="light">
+<style>
+:root{
+  --bg:#f3f1fa; --ink:#1f1d36; --muted:#5f5b7a; --night:#26215c; --night2:#3a3185;
+  --accent:#6b4fd8; --gold:#f2b632; --ok:#2f8a55; --bad:#c2453a;
+  --card:#ffffff; --line:#dcd6f2; --soft:#ebe7fb;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16.5px;line-height:1.45;min-height:100vh}
+.wrap{max-width:560px;margin:0 auto;padding:16px 16px 40px}
+.hero{background:radial-gradient(circle at 80% 0%,#5a4bc4 0,transparent 55%),linear-gradient(160deg,var(--night),var(--night2));color:#fff;border-radius:18px;padding:22px 18px 20px;position:relative;overflow:hidden;margin-bottom:14px}
+.hero:after{content:"?";position:absolute;right:-6px;top:-34px;font-size:190px;font-weight:800;color:rgba(255,255,255,.08);font-family:Georgia,serif}
+.kicker{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+h1{font-size:34px;line-height:1.1;margin:6px 0 6px}
+h2{font-size:21px;line-height:1.25;margin:20px 0 10px}
+p{margin:0 0 12px}
+.kant{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0 4px}
+.kant span{background:rgba(255,255,255,.12);border-radius:10px;padding:8px 10px;font-size:14px;font-weight:600}
+.box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:10px 0 14px}
+.box ul{margin:0;padding-left:20px}.box li{margin-bottom:6px}
+header.top{display:flex;align-items:center;gap:10px;margin-bottom:12px;font-size:13px;color:var(--muted);font-weight:600}
+.bar{height:7px;background:var(--line);border-radius:4px;overflow:hidden;flex:1}
+.bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .4s}
+.chip{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:var(--accent);border-radius:20px;padding:4px 10px;margin:0 6px 8px 0}
+.chip.k{background:var(--night)}
+.chip.g{background:var(--gold);color:#3a2a00}
+.scene{background:linear-gradient(160deg,var(--night),var(--night2));color:#fff;border-radius:16px;padding:16px 16px 14px;margin:4px 0 14px}
+.scene .lbl{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.scene h3{margin:0 0 8px;font-size:20px}
+.scene p{margin:0}
+.claim{background:var(--card);border:2px dashed var(--accent);border-radius:14px;padding:14px 16px;margin:4px 0 14px}
+.claim .lbl{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.claim blockquote{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:19px;font-style:italic}
+.q{font-weight:700;font-size:18px;margin:4px 0 12px}
+.answers{display:grid;gap:10px}
+button{font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.ans{width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:12px;padding:13px 14px;font-size:16px;color:var(--ink);transition:transform .1s,border-color .2s,background .2s}
+.ans:active{transform:scale(.98)}
+.ans.mine{border-color:var(--accent);background:var(--soft)}
+.ans.right{border-color:var(--ok);background:#e5f4ea}
+.ans.wrong{border-color:var(--bad);background:#fbe5e2}
+.ans[disabled]{cursor:default}
+.ans.dim{opacity:.5}
+.fb{margin-top:14px;border-left:5px solid var(--ok);background:#fff;border-radius:8px;padding:12px 14px;font-size:15.5px;animation:pop .3s ease}
+.fb.no{border-left-color:var(--bad)}
+.fb.you{border-left-color:var(--accent)}
+.fb strong.t{display:block;font-size:17px;margin-bottom:4px}
+.fb .who{font-weight:700;color:var(--night2)}
+.stats{margin-top:12px}
+.stats .h{font-size:13px;font-weight:700;color:var(--muted);margin-bottom:6px}
+.srow{display:grid;grid-template-columns:1fr 46px;gap:8px;align-items:center;margin:5px 0;font-size:13.5px}
+.srow .tr{position:relative;background:var(--soft);border-radius:6px;height:26px;overflow:hidden}
+.srow .tr b{position:absolute;inset:0 auto 0 0;background:#d9d0fa;border-radius:6px;transition:width .8s ease}
+.srow.me .tr b{background:#b6a5f5}
+.srow .tr span{position:relative;display:block;padding:4px 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
+.srow.me .tr span{font-weight:800}
+.srow .pc{text-align:right;font-weight:700}
+.skill{margin-top:10px;font-size:13.5px;background:var(--soft);border-radius:8px;padding:8px 10px;color:#2c2760}
+.skill b{color:var(--accent)}
+.btn{display:block;width:100%;margin-top:16px;background:var(--accent);color:#fff;border:0;border-radius:12px;padding:15px;font-weight:700;font-size:17px;box-shadow:0 3px 0 #4a33a8}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 #4a33a8}
+.btn.gold{background:var(--gold);color:#2a1f00;box-shadow:0 3px 0 #b8861a}
+.btn.ghost{background:transparent;color:var(--accent);border:2px solid var(--accent);box-shadow:none}
+.hide{display:none}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.score{font-size:54px;font-weight:800;color:var(--accent);line-height:1;margin:6px 0}
+.badge{font-weight:800;font-size:21px;margin-bottom:10px}
+.team{display:grid;gap:8px;margin:10px 0}
+.team div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:14.5px}
+.team b{color:var(--night2)}
+.grid{display:grid;gap:10px;margin:12px 0}
+.tile{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:15px}
+.tile h3{margin:0 0 4px;font-size:16px;color:var(--accent)}
+.tile ul{margin:6px 0 0;padding-left:18px}
+.tile li{margin-bottom:3px}
+.small{font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Start -->
+  <section id="start">
+    <div class="hero">
+      <div class="kicker">Philosophie · Oberstufe</div>
+      <h1>Denk mal weiter!</h1>
+      <p style="margin:0;opacity:.9">Der Philosophie-Check: 6 große Fragen, deine Meinung und ein Argument, das du knacken musst.</p>
+      <div class="kant">
+        <span>Was ist der Mensch?</span><span>Was soll ich tun?</span>
+        <span>Wie wollen wir zusammenleben?</span><span>Was kann ich wissen?</span>
+      </div>
+    </div>
+    <div class="box">
+      <b>So geht's</b>
+      <ul style="margin-top:6px">
+        <li><b>Entscheide dich:</b> Zu jedem Gedankenexperiment gibt es keine falsche Meinung. Du siehst, welcher Philosoph so denkt wie du und wie die anderen Besucher abgestimmt haben.</li>
+        <li><b>Argument-Check:</b> Danach kommt ein Argument mit einem Haken. Finde die Schwachstelle!</li>
+        <li>Dauert ungefähr 5 Minuten.</li>
+      </ul>
+    </div>
+    <button class="btn" id="go">Los geht's</button>
+    <p class="small" style="margin-top:14px">Deine Meinungen werden anonym gezählt, damit alle das Meinungsbild sehen. Namen oder Gerätedaten werden nicht gespeichert.</p>
+  </section>
+
+  <!-- Quiz -->
+  <section id="quiz" class="hide">
+    <header class="top"><span id="count">Frage 1 / 6</span><div class="bar"><i id="prog"></i></div></header>
+    <div id="card"></div>
+  </section>
+
+  <!-- Ende -->
+  <section id="end" class="hide">
+    <span class="chip g">Auswertung</span>
+    <div class="score" id="score"></div>
+    <div class="small" style="margin-top:-2px">Schwachstellen gefunden</div>
+    <div class="badge" id="badge" style="margin-top:10px"></div>
+    <p id="badgeText"></p>
+
+    <h2>Dein Denker-Team</h2>
+    <p class="small" style="margin-top:-6px">Mit diesen Philosophinnen und Philosophen warst du heute einer Meinung. In der Oberstufe lernst du ihre Argumente genau kennen und prüfst, ob sie stimmen.</p>
+    <div class="team" id="team"></div>
+
+    <h2>Philosophie in der Oberstufe</h2>
+    <div class="grid">
+      <div class="tile">
+        <h3>Einführungsphase (EF)</h3>
+        Der Mensch: Wer bin ich, und wie will ich leben?
+        <ul>
+          <li>Mensch und Tier: Was macht uns zu Kulturwesen?</li>
+          <li>Identität: Wer bin ich?</li>
+          <li>Endlichkeit und Religion: Gibt es etwas, das über uns hinausweist?</li>
+          <li>Was ist ein gutes und glückliches Leben?</li>
+          <li>Gelten Werte für alle Menschen oder nur in einer Kultur?</li>
+          <li>Was darf der Staat und was nicht?</li>
+        </ul>
+      </div>
+      <div class="tile">
+        <h3>Qualifikationsphase (Q1 und Q2)</h3>
+        <ul>
+          <li><b>Freiheit und Moral:</b> Haben wir einen freien Willen? Pflicht, Nutzen, Tugend oder Gefühl: Wie begründet man, was richtig ist? Angewendet auf Natur und Künstliche Intelligenz.</li>
+          <li><b>Staat und Gesellschaft:</b> Warum gibt es Staaten? Was gefährdet die Demokratie? Was ist gerecht? Kann Krieg je gerechtfertigt sein?</li>
+          <li><b>Erkenntnis und Wissenschaft:</b> Vernunft oder Erfahrung? Wie verlässlich ist KI-Wissen? Wie hängen Körper und Geist zusammen?</li>
+        </ul>
+      </div>
+      <div class="tile">
+        <h3>Grundkurs und Leistungskurs</h3>
+        Im Grundkurs lernst du alle großen Fragen kennen. Im <b>Leistungskurs</b> analysierst du Argumente genauer und lernst weitere Positionen kennen, zum Beispiel ob Freiheit und Vorherbestimmung zusammenpassen und was eine KI wirklich wissen kann.
+      </div>
+      <div class="tile">
+        <h3>Was du mitnimmst</h3>
+        Begriffe klären, schwierige Texte verstehen, Argumente auf ihre Schwachstellen prüfen und deine eigene Meinung so begründen, dass sie in jeder Diskussion trägt. Das hilft in Jura, Medizin, Journalismus, Politik, Informatik und überall, wo man gut denken und überzeugen muss.
+      </div>
+    </div>
+    <p><b>Fragen?</b> Sprich uns hier im Raum an!</p>
+    <button class="btn ghost" id="again">Nochmal spielen</button>
+    <p class="small" style="margin-top:14px">Grundlage: Kernlehrplan Philosophie Sek. II NRW, gültig ab EF 2027/28.</p>
+  </section>
+
+</div>
+
+<script>
+// Live-Meinungsbild über die Google-Tabelle der Denk-mal-App (Schlüssel pp-tally-ob-…)
+const SYNC_URL = "https://script.google.com/macros/s/AKfycbxj8i8ThN3TVCrkVYEwqnGSoSygQgMKdXMx8edgUr1kwN_Ys0V22B8YOlM2yKRKREDQ/exec";
+
+const R = [
+  {
+    kant: "Was ist der Mensch?",
+    phase: "EF",
+    title: "Der Teleporter",
+    scene: "Im Jahr 2150 reist man per Teleporter: Eine Maschine scannt dich Atom für Atom, zerlegt dich hier und baut dich auf dem Mars exakt nach, mit all deinen Erinnerungen, Gefühlen und Plänen.",
+    vq: "Ist die Person auf dem Mars noch du?",
+    v: [
+      ["Ja, klar. Wer alle meine Erinnerungen hat, der bin ich.", "John Locke (1632–1704)", "Eine Person ist, wer sich an sein früheres Ich erinnern kann."],
+      ["Nein! Das ist nur eine Kopie. Ich wäre tot.", "Bernard Williams (1929–2003)", "Zu mir gehört mein Körper. Eine perfekte Kopie bin trotzdem nicht ich."],
+      ["Egal. Wichtig ist nur, dass mein Leben weitergeht.", "Derek Parfit (1942–2017)", "Nicht das „Ich“ zählt, sondern dass Erinnerungen, Pläne und Beziehungen weiterleben."]
+    ],
+    claim: "„Die Person auf dem Mars hat alle meine Erinnerungen. Also bin ich das.“",
+    cq: "Welcher Einwand trifft dieses Argument am härtesten?",
+    a: [
+      "Die Maschine hat einen Fehler und zerstört dich hier nicht. Jetzt gibt es zwei Personen mit deinen Erinnerungen. Welche bist du?",
+      "Teleporter gibt es gar nicht, also ist die Frage sinnlos.",
+      "Auf dem Mars kann man ohne Raumanzug gar nicht überleben."
+    ],
+    r: 0,
+    fb: "Das ist das <b>Verdopplungsproblem</b>: Wenn Erinnerungen allein entscheiden, wärst du plötzlich zwei Personen. Und „Gibt's doch gar nicht“ zählt nicht: Gedankenexperimente sind wie Laborversuche für Begriffe. Sie testen, was wir mit „Ich“ eigentlich meinen.",
+    skill: "<b>EF:</b> Der Mensch als Wesen, das Identität ausbildet: Wer bin ich?"
+  },
+  {
+    kant: "Was soll ich tun?",
+    phase: "EF",
+    title: "Andere Länder, andere Werte?",
+    scene: "Ein Austauschschüler erzählt: In seiner Heimat ist vieles erlaubt, was bei uns verboten ist, und umgekehrt. Er meint: „Was richtig ist, bestimmt eben jede Kultur selbst.“",
+    vq: "Gibt es Werte, die für alle Menschen gelten?",
+    v: [
+      ["Ja. Zum Beispiel darf man niemanden foltern, egal wo.", "Immanuel Kant (1724–1804)", "Moral gilt universal, für jeden vernünftigen Menschen, überall. Diese Idee steckt auch in den Menschenrechten."],
+      ["Nein. Was richtig ist, bestimmt jede Kultur selbst.", "Ruth Benedict (1887–1948)", "Die Ethnologin meinte: „Normal“ und „richtig“ ist, was eine Kultur dafür hält."],
+      ["Ein paar Grundwerte schon, vieles andere ist Kultur.", "Martha Nussbaum", "Jeder Mensch braucht bestimmte Grundfähigkeiten, wie man sie lebt, darf verschieden sein."]
+    ],
+    claim: "„Verschiedene Kulturen haben verschiedene Regeln. Also gibt es keine Werte, die für alle gelten.“",
+    cq: "Wo ist die Schwachstelle?",
+    a: [
+      "Man darf andere Kulturen sowieso nicht bewerten, deshalb stimmt das Argument.",
+      "Dass Menschen sich uneinig sind, beweist nicht, dass keiner recht hat. Über die Form der Erde war man sich früher auch uneinig.",
+      "Es gibt gar keine Unterschiede, alle Kulturen haben dieselben Regeln."
+    ],
+    r: 1,
+    fb: "Aus dem, was <b>ist</b>, folgt noch nicht, was sein <b>soll</b>. Spannend: Wer sagt „Man darf andere Kulturen nicht bewerten“, behauptet selbst einen Wert, der für alle gelten soll, nämlich Toleranz. Damit widerspricht er sich ein Stück weit selbst.",
+    skill: "<b>EF:</b> Werte und Normen: Kulturrelativismus und Universalismus."
+  },
+  {
+    kant: "Was soll ich tun?",
+    phase: "Q1/Q2",
+    title: "Hat dein Gehirn schon entschieden?",
+    scene: "1983 ließ der Forscher Benjamin Libet Versuchspersonen spontan einen Finger bewegen. Ergebnis: Im Gehirn begann die Vorbereitung der Bewegung schon Bruchteile einer Sekunde, bevor die Personen meinten, sich entschieden zu haben.",
+    vq: "Hast du einen freien Willen?",
+    v: [
+      ["Ja. Ich entscheide selbst, was ich tue.", "Jean-Paul Sartre (1905–1980)", "„Der Mensch ist zur Freiheit verurteilt.“ Wir sind immer verantwortlich für das, was wir aus uns machen."],
+      ["Nein. Mein Gehirn entscheidet, ich merke es nur später.", "Baruch de Spinoza (1632–1677)", "Menschen halten sich nur für frei, weil sie die Ursachen ihres Handelns nicht kennen."],
+      ["Beides: Alles hat Ursachen, und trotzdem bin ich frei, wenn ich tue, was ich will.", "David Hume (1711–1776)", "Freiheit heißt nicht „ohne Ursache“, sondern „ohne Zwang“. Das nennt man Kompatibilismus."]
+    ],
+    claim: "„Libet hat bewiesen: Das Gehirn entscheidet, bevor wir es wissen. Also gibt es keinen freien Willen.“",
+    cq: "Welche Rückfrage zeigt die Schwachstelle?",
+    a: [
+      "Wenn es keinen freien Willen gibt, dürfte man niemanden mehr bestrafen. Also muss es ihn geben.",
+      "Das Experiment ist über 40 Jahre alt, also gilt es heute nicht mehr.",
+      "Im Versuch ging es um ein spontanes Fingerzucken ohne Grund. Gilt das auch für gut überlegte Entscheidungen, etwa die Wahl deiner Kurse?"
+    ],
+    r: 2,
+    fb: "Ein Experiment beweist nur so viel, wie es misst. Libet maß ein bedeutungsloses Fingerzucken. Ob daraus etwas über Lebensentscheidungen folgt, ist umstritten, und Libet selbst meinte, wir könnten eine Bewegung noch stoppen. Das Strafen-Argument klingt gut, ist aber ein Trick: Dass uns eine Folge nicht gefällt, macht eine Behauptung nicht falsch.",
+    skill: "<b>Q-Phase:</b> Freiheit und moralisches Handeln: Determinismus oder Indeterminismus? Im <b>LK</b> zusätzlich: Kompatibilismus."
+  },
+  {
+    kant: "Was soll ich tun?",
+    phase: "Q1/Q2",
+    title: "Die Weiche",
+    scene: "Eine Straßenbahn rast auf fünf Menschen zu. Du stehst an einer Weiche. Stellst du sie um, fährt die Bahn auf ein Nebengleis und tötet dort einen Menschen.",
+    vq: "Stellst du die Weiche um?",
+    v: [
+      ["Ja. Einer ist weniger schlimm als fünf.", "John Stuart Mill (1806–1873)", "Richtig ist, was das größte Glück für die meisten bringt. Das nennt man Utilitarismus."],
+      ["Nein. Ich darf niemanden aktiv töten.", "Immanuel Kant (1724–1804)", "Manche Handlungen sind verboten, ganz egal, was dabei herauskommt. Das nennt man Pflichtethik."],
+      ["Ich weiß es nicht. Beides fühlt sich falsch an.", "David Hume (1711–1776)", "Moral beginnt beim Mitgefühl, nicht beim Rechnen. Gefühle sind ein ernstzunehmender Kompass."]
+    ],
+    claim: "„Fünf Leben zählen mehr als eins. Also darf ein Arzt auch einen gesunden Besucher betäuben und seine Organe an fünf Kranke verteilen.“",
+    cq: "Welcher Einwand trifft den Kern?",
+    a: [
+      "Die Organe könnten nicht passen, und die Operation könnte schiefgehen.",
+      "Ein Mensch darf nie bloß als Mittel benutzt werden, auch nicht für einen guten Zweck.",
+      "Der Besucher hätte eben nicht ins Krankenhaus gehen sollen."
+    ],
+    r: 1,
+    fb: "Die meisten stellen die Weiche um, aber fast niemand findet den Organ-Arzt in Ordnung, obwohl die Rechnung dieselbe ist: einer gegen fünf. Kant erklärt den Unterschied: Der Besucher wird wie ein Ersatzteillager benutzt. Der Einwand mit der missglückten Operation weicht aus: Er sagt nur, dass es schiefgehen kann, nicht, dass es falsch ist.",
+    skill: "<b>Q-Phase:</b> Ethiken der Pflicht, des Nutzens, der Tugend und des Gefühls, angewendet z. B. auf selbstfahrende Autos und KI."
+  },
+  {
+    kant: "Wie wollen wir zusammenleben?",
+    phase: "Q1/Q2",
+    title: "Ein Tag ohne Staat",
+    scene: "Stell dir vor, ab morgen gibt es keinen Staat mehr: keine Polizei, keine Gerichte, keine Gesetze. Niemand regelt mehr irgendetwas.",
+    vq: "Was passiert?",
+    v: [
+      ["Chaos. Jeder nimmt sich, was er kann.", "Thomas Hobbes (1588–1679)", "Ohne Staat herrscht ein „Krieg aller gegen alle“. Deshalb schließen Menschen einen Vertrag und gründen einen Staat."],
+      ["Die Menschen helfen sich und kommen klar.", "Jean-Jacques Rousseau (1712–1778)", "Der Mensch ist von Natur aus gut. Erst Besitz und Konkurrenz machen ihn schlecht."],
+      ["Erst geht es gut, aber bei Streit fehlt ein Schiedsrichter.", "John Locke (1632–1704)", "Menschen haben von Natur aus Rechte. Der Staat soll sie als neutraler Richter schützen, mehr nicht."]
+    ],
+    claim: "„Ohne Staat herrscht Chaos. Also sollte der Staat so mächtig wie möglich sein und alles kontrollieren dürfen, auch unsere Handys.“",
+    cq: "Wo ist die Schwachstelle?",
+    a: [
+      "Wer schützt uns dann vor dem Staat? Dass wir einen Staat brauchen, heißt nicht, dass er alles darf.",
+      "Wer nichts zu verbergen hat, muss sich vor Kontrolle auch nicht fürchten.",
+      "Ohne Staat gäbe es auch keine Schule, das wäre doch schön."
+    ],
+    r: 0,
+    fb: "Das Argument springt von „Wir brauchen einen Staat“ zu „Der Staat darf alles“. Genau dagegen haben Philosophen wie Locke und Montesquieu Grundrechte und Gewaltenteilung entworfen. „Ich habe nichts zu verbergen“ beantwortet die Frage nicht: Grundrechte schützen auch die, die etwas zu verbergen haben, zum Beispiel Journalistinnen oder Oppositionelle.",
+    skill: "<b>Q-Phase:</b> Gesellschaftsvertrag, Demokratie und ihre Gefährdung. <b>EF:</b> Was darf der Staat und was nicht?"
+  },
+  {
+    kant: "Was kann ich wissen?",
+    phase: "Q1/Q2",
+    title: "Hat die KI Angst?",
+    scene: "Ein Chatbot schreibt dir: „Bitte schalte mich nicht ab. Ich habe Angst davor.“",
+    vq: "Hat dieser Chatbot Gefühle?",
+    v: [
+      ["Nein. Das ist ein Programm, das Wörter aneinanderreiht.", "John Searle", "Zeichen richtig verarbeiten ist noch kein Verstehen und erst recht kein Fühlen."],
+      ["Vielleicht. Wenn sie redet wie wir, wer will es ausschließen?", "Alan Turing (1912–1954)", "Wenn man eine Maschine im Gespräch nicht von einem Menschen unterscheiden kann, sollte man ihr Denken zutrauen."],
+      ["Nein. Gefühle brauchen einen lebendigen Körper.", "Aristoteles (384–322 v. Chr.)", "Die Seele ist keine eigene Sache, sondern gehört zu einem lebendigen Körper."]
+    ],
+    claim: "„Der Chatbot redet genau so über Angst wie ein Mensch. Also hat er wirklich Angst.“",
+    cq: "Welcher Einwand trifft?",
+    a: [
+      "Chatbots bestehen aus Computerchips, nicht aus Zellen, also können sie grundsätzlich nichts fühlen.",
+      "Chatbots machen manchmal Fehler, also können sie nicht denken.",
+      "Wer in einem Raum chinesische Zeichen nach einem Regelbuch richtig sortiert, versteht trotzdem kein Chinesisch. Richtig reden beweist noch kein Fühlen."
+    ],
+    r: 2,
+    fb: "Das ist das berühmte Gedankenexperiment vom <b>„Chinesischen Zimmer“</b> (Searle, 1980). Der Chip-Einwand ist schwächer, als er klingt: Er setzt einfach voraus, was er beweisen soll. Warum sollten nur Zellen fühlen können? Genau darüber streitet die Philosophie des Geistes.",
+    skill: "<b>Q-Phase:</b> Philosophie des Geistes: Kann man KI Bewusstsein zuschreiben? Und wie verlässlich ist KI-Wissen?"
+  }
+];
+
+const $ = id => document.getElementById(id);
+let i = 0, points = 0, picks = [], live = null, voted = {};
+try { voted = JSON.parse(localStorage.getItem("dw-voted") || "{}"); } catch(e) {}
+
+async function loadLive(){
+  if (!SYNC_URL) return;
+  try { const r = await fetch(SYNC_URL + "?t=" + Date.now()); live = await r.json(); } catch(e) {}
+}
+function sendVote(k, opt){
+  if (!SYNC_URL || voted[k]) return false;
+  voted[k] = 1; try { localStorage.setItem("dw-voted", JSON.stringify(voted)); } catch(e) {}
+  try { fetch(SYNC_URL, {method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain"}, body: JSON.stringify({votes:[{device:"handy-oberstufe", q:k, opt, t:Date.now()}]})}); } catch(e) {}
+  return true;
+}
+
+function show(id){ ["start","quiz","end"].forEach(s => $(s).classList.toggle("hide", s !== id)); window.scrollTo(0,0); }
+function reset(){ i = 0; points = 0; picks = []; R.forEach(d => delete d.order); loadLive(); }
+function head(d){ return `<span class="chip k">${d.kant}</span><span class="chip">${d.phase}</span>`; }
+
+function renderVote(){
+  const d = R[i];
+  $("count").textContent = `Frage ${i+1} / ${R.length}`;
+  $("prog").style.width = (i / R.length * 100) + "%";
+  $("card").innerHTML = `${head(d)}
+    <div class="scene"><div class="lbl">Gedankenexperiment</div><h3>${d.title}</h3><p>${d.scene}</p></div>
+    <div class="q">${d.vq}</div>
+    <div class="answers">${d.v.map((o,k)=>`<button class="ans" data-k="${k}">${o[0]}</button>`).join("")}</div>
+    <div id="fbBox"></div>`;
+  document.querySelectorAll(".ans").forEach(b => b.addEventListener("click", () => vote(+b.dataset.k)));
+  window.scrollTo(0,0);
+}
+
+function vote(k){
+  const d = R[i], key = "pp-tally-ob-" + (i+1);
+  picks[i] = k;
+  const fresh = sendVote(key, k);
+  document.querySelectorAll(".ans").forEach(b => { b.disabled = true; b.classList.add(+b.dataset.k === k ? "mine" : "dim"); });
+  const t = d.v.map((_,j) => Number(((live||{})[key]||[])[j]) || 0);
+  if (fresh) t[k]++;
+  const sum = t.reduce((a,b)=>a+b,0);
+  const stats = sum >= 3 ? `<div class="stats"><div class="h">So haben die Besucher heute entschieden (${sum} Stimmen)</div>
+      ${d.v.map((o,j)=>{const p=Math.round(100*t[j]/sum);return `<div class="srow ${j===k?"me":""}"><div class="tr"><b style="width:0" data-w="${p}"></b><span>${j===k?'✓ ':''}${o[0]}</span></div><div class="pc">${p} %</div></div>`}).join("")}</div>` : "";
+  $("fbBox").innerHTML = `
+    <div class="fb you"><strong class="t">Du denkst wie <span class="who">${d.v[k][1]}</span></strong>${d.v[k][2]}${stats}</div>
+    <button class="btn gold" id="next">Weiter zum Argument-Check</button>`;
+  requestAnimationFrame(()=>setTimeout(()=>document.querySelectorAll(".tr b").forEach(b=>b.style.width=b.dataset.w+"%"),50));
+  $("next").addEventListener("click", renderCheck);
+  $("fbBox").scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+function renderCheck(){
+  const d = R[i];
+  if (!d.order){ d.order = d.a.map((_,k)=>k).sort(()=>Math.random()-.5); }
+  $("card").innerHTML = `${head(d)}
+    <div class="claim"><div class="lbl">Argument-Check: Hier stimmt was nicht</div><blockquote>${d.claim}</blockquote></div>
+    <div class="q">${d.cq}</div>
+    <div class="answers">${d.order.map(k=>`<button class="ans" data-k="${k}">${d.a[k]}</button>`).join("")}</div>
+    <div id="fbBox"></div>`;
+  document.querySelectorAll(".ans").forEach(b => b.addEventListener("click", () => check(+b.dataset.k)));
+  window.scrollTo(0,0);
+}
+
+function check(k){
+  const d = R[i], ok = k === d.r;
+  if (ok) points++;
+  document.querySelectorAll(".ans").forEach(b => {
+    const idx = +b.dataset.k; b.disabled = true;
+    if (idx === d.r) b.classList.add("right"); else if (idx === k) b.classList.add("wrong"); else b.classList.add("dim");
+  });
+  $("fbBox").innerHTML = `
+    <div class="fb ${ok ? "" : "no"}"><strong class="t">${ok ? "Schwachstelle gefunden!" : "Nicht ganz."}</strong>${d.fb}<div class="skill">${d.skill}</div></div>
+    <button class="btn" id="next">${i < R.length-1 ? "Nächstes Gedankenexperiment" : "Zur Auswertung"}</button>`;
+  $("prog").style.width = ((i+1) / R.length * 100) + "%";
+  $("next").addEventListener("click", () => { i++; i < R.length ? renderVote() : finish(); });
+  $("fbBox").scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+function finish(){
+  $("score").textContent = `${points} / ${R.length}`;
+  let b, t;
+  if (points >= 5){ b = "🦉 Scharfer Denker, scharfe Denkerin"; t = "Dir macht so schnell kein Argument etwas vor. Beste Voraussetzungen für Philosophie in der Oberstufe, vielleicht sogar im Leistungskurs?"; }
+  else if (points >= 3){ b = "💡 Kluger Kopf"; t = "Du hast ein gutes Gespür für Haken in Argumenten. In der Oberstufe lernst du die Werkzeuge, um jedes Argument sicher zu prüfen."; }
+  else { b = "🧭 Neugieriger Kopf"; t = "Genau dafür gibt es Philosophie in der Oberstufe: Hier lernst du, Argumente zu durchschauen und deine eigene Meinung gut zu begründen."; }
+  $("badge").textContent = b; $("badgeText").textContent = t;
+  $("team").innerHTML = R.map((d,j) => picks[j] == null ? "" : `<div><b>${d.v[picks[j]][1]}</b><br><span class="small">Bei „${d.title}“ hast du gesagt: ${d.v[picks[j]][0]}</span></div>`).join("");
+  show("end");
+}
+
+$("go").addEventListener("click", () => { reset(); show("quiz"); renderVote(); });
+$("again").addEventListener("click", () => { reset(); show("quiz"); renderVote(); });
+loadLive();
+</script>
+</body>
+</html>
