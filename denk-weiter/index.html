@@ -150,8 +150,8 @@ button{font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
         </ul>
       </div>
       <div class="tile">
-        <h3>Grundkurs und Leistungskurs</h3>
-        Im Grundkurs lernst du alle großen Fragen kennen. Im <b>Leistungskurs</b> analysierst du Argumente genauer und lernst weitere Positionen kennen, zum Beispiel ob Freiheit und Vorherbestimmung zusammenpassen und was eine KI wirklich wissen kann.
+        <h3>Philosophie bei uns</h3>
+        <ul><li>Als <b>Grundkurs</b> von der EF bis zum Abitur</li><li>Du kannst Philosophie <b>statt Religion</b> wählen oder zusätzlich als gesellschaftswissenschaftliches Fach</li><li>Auch als <b>Abiturfach</b> möglich</li></ul>
       </div>
       <div class="tile">
         <h3>Was du mitnimmst</h3>
@@ -234,7 +234,7 @@ const R = [
     ],
     r: 2,
     fb: "Ein Experiment beweist nur so viel, wie es misst. Libet maß ein bedeutungsloses Fingerzucken. Ob daraus etwas über Lebensentscheidungen folgt, ist umstritten, und Libet selbst meinte, wir könnten eine Bewegung noch stoppen. Das Strafen-Argument klingt gut, ist aber ein Trick: Dass uns eine Folge nicht gefällt, macht eine Behauptung nicht falsch.",
-    skill: "<b>Q-Phase:</b> Freiheit und moralisches Handeln: Determinismus oder Indeterminismus? Im <b>LK</b> zusätzlich: Kompatibilismus."
+    skill: "<b>Q-Phase:</b> Freiheit und moralisches Handeln: Determinismus oder Indeterminismus?"
   },
   {
     kant: "Was soll ich tun?",
@@ -384,7 +384,7 @@ function check(k){
 function finish(){
   $("score").textContent = `${points} / ${R.length}`;
   let b, t;
-  if (points >= 5){ b = "🦉 Scharfer Denker, scharfe Denkerin"; t = "Dir macht so schnell kein Argument etwas vor. Beste Voraussetzungen für Philosophie in der Oberstufe, vielleicht sogar im Leistungskurs?"; }
+  if (points >= 5){ b = "🦉 Scharfer Denker, scharfe Denkerin"; t = "Dir macht so schnell kein Argument etwas vor. Beste Voraussetzungen für Philosophie in der Oberstufe, vielleicht sogar als Abiturfach?"; }
   else if (points >= 3){ b = "💡 Kluger Kopf"; t = "Du hast ein gutes Gespür für Haken in Argumenten. In der Oberstufe lernst du die Werkzeuge, um jedes Argument sicher zu prüfen."; }
   else { b = "🧭 Neugieriger Kopf"; t = "Genau dafür gibt es Philosophie in der Oberstufe: Hier lernst du, Argumente zu durchschauen und deine eigene Meinung gut zu begründen."; }
   $("badge").textContent = b; $("badgeText").textContent = t;
